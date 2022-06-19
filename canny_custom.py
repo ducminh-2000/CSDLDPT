@@ -13,9 +13,6 @@ def scale_to_0_255(img):
     return new_img
 
 def my_canny(img, min_val, max_val, sobel_size=3, is_L2_gradient=False):
-    """
-    Try to implement Canny algorithm in OpenCV tutorial @ https://docs.opencv.org/master/da/d22/tutorial_py_canny.html
-    """
     
     #2. Noise Reduction
     smooth_img = cv2.GaussianBlur(img, ksize=(5, 5), sigmaX=1, sigmaY=1)
@@ -75,40 +72,4 @@ def my_canny(img, min_val, max_val, sobel_size=3, is_L2_gradient=False):
     
     return scale_to_0_255(canny_mask)
 
-# img = cv2.imread('download.jpeg', 0)
-# my_canny = my_canny(img, min_val=100, max_val=200)
-# edges = cv2.Canny(img, 100, 200)
 
-
-# cv2.imwrite('my_canny.jpg', my_canny)
-# cv2.imwrite('edges.jpg', edges)
-
-def edges_gen():
-    for inputFolder in glob.glob("dataset_2/*"):
-        index = 1
-        for imagePath in glob.glob(inputFolder+"/*.jpg"):
-            path = os.path.dirname(imagePath)
-            imageID = os.path.basename(path) + "_" + str(index)
-            image = cv2.imread(imagePath,0)
-            # my_canny = my_canny(image, min_val=100, max_val=200)
-            temp = 'edges/' + imageID + '.jpg'
-            cv2.imwrite(temp,cv2.Canny(image, 100, 200))
-            index += 1
-
-
-def edges_exact():
-    output = open("fileShape.csv", "w")
-    for inputFolder in glob.glob("edges/*"):
-        index = 1
-        for imagePath in glob.glob(inputFolder+"/*.jpg"):
-            print(inputFolder)
-            path = os.path.dirname(imagePath)
-            imageID = os.path.basename(path) + "_" + str(index)
-            image = cv2.imread(imagePath,0)
-            cv2.show(imagePath,image)
-            output.write("%s,%s\n" % (imageID, ",".join(np.squeeze(np.asarray(image)))))
-            index += 1
-    output.close()
-    cv2.waitKey()
-
-edges_exact()

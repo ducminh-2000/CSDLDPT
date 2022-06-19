@@ -3,7 +3,7 @@ import csv
 
 class Searcher:
 
-    def search(self, queryFeatures, limit = 10):
+    def search(self, queryFeatures, limit = 11):
         results = {}
   		# open the index file for reading
         with open(self.indexPath) as f:
@@ -11,9 +11,13 @@ class Searcher:
             reader = csv.reader(f)
             # loop over the rows in the index
             for row in reader:
-                features = [float(x) for x in row[1:]]
-                d = self.chi2_distance(features, queryFeatures)
-                results[row[0]] = d
+               
+                x = row[0]
+                row.pop(0)
+                # row.pop(len(row) - 1)
+                features = [float(x) for x in row]
+                d = self.distance(features, queryFeatures)
+                results[x] = d
             # close the reader
             f.close()
 
@@ -21,12 +25,11 @@ class Searcher:
         # return our (limited) results
         return results[:limit]
 
-    def chi2_distance(self, histA, histB, eps = 1e-10):
-        # compute the chi-squared distance
-        d = 0.5 * np.sum([((a - b) ** 2) / (a + b + eps)
-            for (a, b) in zip(histA, histB)])
-        # return the chi-squared distance
-        return d
+    def distance(self, A, B):
+        A = np.array(A)
+        B = np.array(B)
+        # compute the Euclidean distance
+        return np.linalg.norm(A-B)
 
     def __init__(self, indexPath):
   	# store our index path
