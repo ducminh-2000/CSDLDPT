@@ -3,7 +3,7 @@ import csv
 
 class Searcher:
 
-    def search(self, queryFeatures, limit = 11):
+    def search(self, queryFeatures, limit = 13):
         results = {}
   		# open the index file for reading
         with open(self.indexPath) as f:

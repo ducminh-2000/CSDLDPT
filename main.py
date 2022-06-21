@@ -8,12 +8,13 @@ import numpy as np
 
 
 cd = ColorDescriptor((8, 12, 3))
-query = cv2.imread("test/test.jpg")
-image = cv2.imread("test/test.jpg",0)
+query = cv2.imread("dataset_2/mango_tree/image0.jpg")
+image = cv2.imread("dataset_2/mango_tree/image0.jpg",0)
+
 cv2.imwrite('test/test_query.jpg',my_canny(image, min_val=100, max_val=200))
-features1 = cd.describe(query)
-features2 = cd.describe(cv2.imread("test/test_query.jpg"))
-features = np.concatenate((features1,features2))
+features_color = cd.describe(query)
+features_edges = cd.describe(cv2.imread("test/test_query.jpg"))
+features = np.concatenate((features_edges,features_color))
 
 # perform the search
 searcher = Searcher("data.csv")

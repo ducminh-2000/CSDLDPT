@@ -125,9 +125,9 @@ def merge_vector():
     output.close()
 
 
-exact_color_csv()
-exact_edge_csv()
-merge_vector()
+# exact_color_csv()
+# exact_edge_csv()
+# merge_vector()
 
 
 
